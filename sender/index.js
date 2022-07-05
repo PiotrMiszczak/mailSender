@@ -32,6 +32,7 @@ let mailer = nodemailer.createTransport({
 });
 
 app.post("/", function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*');
   mailer.sendMail(
     {
       from: process.env.MAIL_ADDRESS,

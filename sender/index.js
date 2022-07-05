@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyparser = require("body-parser");
 const nodemailer = require("nodemailer");
+const cors = require('cors');
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +18,7 @@ if (process.env.MAIL_SECURE =="TRUE") {
 }
 
 app.use(bodyparser.urlencoded({ extended: false }));
+app.use(cors())
 
 let mailer = nodemailer.createTransport({
   host: process.env.MAIL_SERVER,
@@ -32,7 +34,6 @@ let mailer = nodemailer.createTransport({
 });
 
 app.post("/", function (req, res) {
-  res.set('Access-Control-Allow-Origin', '*');
   mailer.sendMail(
     {
       from: process.env.MAIL_ADDRESS,
